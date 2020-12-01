@@ -22,7 +22,7 @@ for (event of events) {
   route.add(event.destination);
   routeDate.push(event.startTime);
 }
-const routeList = Array.from(route);
+const routeList = Array.from(route).join(` &mdash; `);
 
 const render = (container, template, place) => {
   container.insertAdjacentHTML(place, template);
