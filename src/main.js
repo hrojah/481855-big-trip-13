@@ -11,7 +11,7 @@ import { generateEvent } from "./mock/event";
 
 const TRIP_EVENT = 20;
 
-export const events = new Array(TRIP_EVENT)
+const events = new Array(TRIP_EVENT)
   .fill()
   .map(generateEvent)
   .sort((a, b) => a.startTime - b.startTime);
