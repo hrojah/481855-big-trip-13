@@ -1,6 +1,3 @@
-import { generateEvent } from "../mock/event";
-import dayjs, { isDayjs } from "dayjs";
-
 export const createEventItemTemplate = (event) => {
   const hour = 60;
   const day = 1440;

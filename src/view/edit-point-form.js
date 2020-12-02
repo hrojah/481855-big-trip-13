@@ -1,5 +1,5 @@
-import { renderOffers } from "./offers";
-import dayjs, { isDayjs } from "dayjs";
+import {renderOffers} from "./offers";
+import dayjs from "dayjs";
 
 export const createEditPointFormTemplate = (event) => {
   const startTime = dayjs(event.startTime).format(`DD/MM/YY HH:mm`);
@@ -9,9 +9,7 @@ export const createEditPointFormTemplate = (event) => {
                   <div class="event__type-wrapper">
                     <label class="event__type  event__type-btn" for="event-type-toggle-1">
                       <span class="visually-hidden">Choose event type</span>
-                      <img class="event__type-icon" width="17" height="17" src="img/icons/${
-                        event.type
-                      }.png" alt="Event type icon">
+                      <img class="event__type-icon" width="17" height="17" src="img/icons/${event.type}.png" alt="Event type icon">
                     </label>
                     <input class="event__type-toggle  visually-hidden" id="event-type-toggle-1" type="checkbox">
 
@@ -76,9 +74,7 @@ export const createEditPointFormTemplate = (event) => {
                     <label class="event__label  event__type-output" for="event-destination-1">
                       ${event.type}
                     </label>
-                    <input class="event__input  event__input--destination" id="event-destination-1" type="text" name="event-destination" value="${
-                      event.destination
-                    }" list="destination-list-1">
+                    <input class="event__input  event__input--destination" id="event-destination-1" type="text" name="event-destination" value="${event.destination}" list="destination-list-1">
                     <datalist id="destination-list-1">
                       <option value="Amsterdam"></option>
                       <option value="Geneva"></option>
@@ -99,9 +95,7 @@ export const createEditPointFormTemplate = (event) => {
                       <span class="visually-hidden">Price</span>
                       &euro;
                     </label>
-                    <input class="event__input  event__input--price" id="event-price-1" type="text" name="event-price" value="${
-                      event.price
-                    }">
+                    <input class="event__input  event__input--price" id="event-price-1" type="text" name="event-price" value="${event.price}">
                   </div>
 
                   <button class="event__save-btn  btn  btn--blue" type="submit">Save</button>
@@ -121,9 +115,7 @@ export const createEditPointFormTemplate = (event) => {
 
                   <section class="event__section  event__section--destination">
                     <h3 class="event__section-title  event__section-title--destination">Destination</h3>
-                    <p class="event__destination-description">${
-                      event.description
-                    }</p>
+                    <p class="event__destination-description">${event.description}</p>
                   </section>
                 </section>
               </form>`;

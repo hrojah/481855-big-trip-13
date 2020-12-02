@@ -1,5 +1,3 @@
-import dayjs, { isDayjs } from "dayjs";
-
 export const createTripInfoTemplate = (events, routeList) => {
   const startDate = events[0].startTime.format(`MMM DD`);
   const endDate = events[events.length - 1].startTime.format(`DD`);

@@ -6,10 +6,8 @@ import { createSortTemplate } from "./view/trip-sort";
 import { createEventsListTemplate } from "./view/trip-events-list";
 import { createEventItemTemplate } from "./view/event-item";
 import { createEditPointFormTemplate } from "./view/edit-point-form";
-import { createAddPointFormTemplate } from "./view/new-point-form";
 import { generateEvent } from "./mock/event";
-
-const TRIP_EVENT = 20;
+import { TRIP_EVENT } from "./constants";
 
 const events = new Array(TRIP_EVENT)
   .fill()
