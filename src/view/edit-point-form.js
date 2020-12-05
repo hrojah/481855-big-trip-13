@@ -1,7 +1,8 @@
-import {renderOffers} from "./offers";
+import {createElement} from "../utils";
+import Offer from "./offers";
 import dayjs from "dayjs";
 
-export const createEditPointFormTemplate = (event) => {
+const createEditPointFormTemplate = (event) => {
   const startTime = dayjs(event.startTime).format(`DD/MM/YY HH:mm`);
   const endTime = dayjs(event.endTime).format(`DD/MM/YY HH:mm`);
   return `<form class="event event--edit" action="#" method="post">
@@ -109,7 +110,7 @@ export const createEditPointFormTemplate = (event) => {
                     <h3 class="event__section-title  event__section-title--offers">Offers</h3>
 
                     <div class="event__available-offers">
-                      ${renderOffers(event)}
+                    ${new Offer(event).getTemplate()}
                     </div>
                   </section>
 
@@ -120,3 +121,25 @@ export const createEditPointFormTemplate = (event) => {
                 </section>
               </form>`;
 };
+
+export default class EditPoint {
+  constructor(event) {
+    this._event = event;
+    this._element = null;
+  }
+
+  getTemplate() {
+    return createEditPointFormTemplate(this._event);
+  }
+
+  getElement() {
+    if (!this._element) {
+      this._element = createElement(this.getTemplate());
+    }
+    return this._element;
+  }
+
+  removeElement() {
+    this._element = null;
+  }
+}

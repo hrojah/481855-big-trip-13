@@ -1,4 +1,5 @@
-import {renderOffers} from "./offers";
+import {createElement} from "../utils";
+import Offer from "./offers";
 import dayjs from "dayjs";
 
 export const createAddPointFormTemplate = (event) => {
@@ -113,7 +114,7 @@ export const createAddPointFormTemplate = (event) => {
                   <section class="event__section  event__section--offers">
                     <h3 class="event__section-title  event__section-title--offers">Offers</h3>
                     <div class="event__available-offers">
-                      ${renderOffers(event)}
+                      ${new Offer(event).getTemplate()}
                     </div>
                   </section>
 
@@ -130,3 +131,25 @@ export const createAddPointFormTemplate = (event) => {
                 </section>
               </form>`;
 };
+
+export default class AddPoint {
+  constructor(event) {
+    this._event = event;
+    this._element = null;
+  }
+
+  getTemplate() {
+    return createAddPointFormTemplate(this._event);
+  }
+
+  getElement() {
+    if (!this._element) {
+      this._element = createElement(this.getTemplate());
+    }
+    return this._element;
+  }
+
+  removeElement() {
+    this._element = null;
+  }
+}

@@ -1,3 +1,5 @@
+import {createElement} from "../utils";
+
 export const renderOffers = (event) => {
   return event.offers
     .map((offer) => {
@@ -13,3 +15,25 @@ export const renderOffers = (event) => {
     })
     .join(``);
 };
+
+export default class Offer {
+  constructor(event) {
+    this._event = event;
+    this._element = null;
+  }
+
+  getTemplate() {
+    return renderOffers(this._event);
+  }
+
+  getElement() {
+    if (!this._element) {
+      this._element = createElement(this.getTemplate());
+    }
+    return this._element;
+  }
+
+  removeElement() {
+    this._element = null;
+  }
+}

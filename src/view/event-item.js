@@ -1,40 +1,9 @@
-export const createEventItemTemplate = (event) => {
-  const hour = 60;
-  const day = 1440;
-  const {
-    type,
-    price,
-    startTime,
-    endTime,
-    destination,
-    isFavorite,
-    offers,
-  } = event;
-  const monthDayString = startTime.format(`MMM DD`);
-  const fullStartDateString = startTime.format(`YYYY-MM-DDTHH:mm`);
-  const hoursMinutesEndString = endTime.format(`HH:mm`);
-  const hoursMinutesStartString = startTime.format(`HH:mm`);
-  const fullEndDayString = endTime.format(`YYYY-MM-DDTHH:mm`);
-  const totalMinutes = endTime.diff(startTime, `minute`);
-  const totalHours = Math.floor(totalMinutes / hour);
-  const totalDays = Math.floor(totalMinutes / day);
+import {createEventDate} from "../utils";
+import {createElement} from "../utils";
 
-  const minutesLeft = totalMinutes - totalHours * 60;
-  const hoursLeft = totalHours - totalDays * 24;
-  const daysLeft = totalDays;
-
-  const minutesLeftFormatted = minutesLeft.toString().padStart(2, `0`);
-  const hoursLeftFormatted = hoursLeft.toString().padStart(2, `0`);
-  const dayLeftFormatted = daysLeft.toString().padStart(2, `0`);
-
-  let duration;
-  if (daysLeft > 0) {
-    duration = `${dayLeftFormatted}D ${hoursLeftFormatted}H ${minutesLeftFormatted}M`;
-  } else if (hoursLeft > 0) {
-    duration = `${hoursLeftFormatted}H ${minutesLeftFormatted}M`;
-  } else if (minutesLeft > 0) {
-    duration = `${minutesLeftFormatted}M`;
-  }
+const createPointTemplate = (event) => {
+  const {type, price, startTime, endTime, destination, isFavorite, offers} = event;
+  const date = createEventDate(startTime, endTime);
 
   const favorite = isFavorite === true ? `event__favorite-btn--active` : ``;
 
@@ -56,18 +25,18 @@ export const createEventItemTemplate = (event) => {
 
   return `<li class="trip-events__item">
               <div class="event">
-                <time class="event__date" datetime="2019-03-20">${monthDayString}</time>
+                <time class="event__date" datetime="2019-03-20">${date.monthDayString}</time>
                 <div class="event__type">
                   <img class="event__type-icon" width="42" height="42" src="img/icons/${type}.png" alt="Event type icon">
                 </div>
                 <h3 class="event__title">${type} ${destination}</h3>
                 <div class="event__schedule">
                   <p class="event__time">
-                    <time class="event__start-time" datetime="${fullStartDateString}">${hoursMinutesStartString}</time>
+                    <time class="event__start-time" datetime="${date.fullStartDateString}">${date.hoursMinutesStartString}</time>
                     &mdash;
-                    <time class="event__end-time" datetime="${fullEndDayString}">${hoursMinutesEndString}</time>
+                    <time class="event__end-time" datetime="${date.fullEndDayString}">${date.hoursMinutesEndString}</time>
                   </p>
-                  <p class="event__duration">${duration}</p>
+                  <p class="event__duration">${date.duration}</p>
                 </div>
                 <p class="event__price">
                   &euro;&nbsp;<span class="event__price-value">${price}</span>
@@ -88,3 +57,25 @@ export const createEventItemTemplate = (event) => {
               </div>
             </li>`;
 };
+
+export default class Point {
+  constructor(event) {
+    this._event = event;
+    this._element = null;
+  }
+
+  getTemplate() {
+    return createPointTemplate(this._event);
+  }
+
+  getElement() {
+    if (!this._element) {
+      this._element = createElement(this.getTemplate());
+    }
+    return this._element;
+  }
+
+  removeElement() {
+    this._element = null;
+  }
+}
