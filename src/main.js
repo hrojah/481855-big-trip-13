@@ -63,8 +63,14 @@ const renderPoint = (pointListElement, point) => {
     replacePointToForm();
     document.addEventListener(`keydown`, onEscKeyDown);
   });
+
   pointEditComponent.getElement().addEventListener(`submit`, (evt) => {
     evt.preventDefault();
+    replaceFormToPoint();
+    document.removeEventListener(`keydown`, onEscKeyDown);
+  });
+
+  pointEditComponent.getElement().querySelector(`.event__rollup-btn`).addEventListener(`click`, (evt) => {
     replaceFormToPoint();
     document.removeEventListener(`keydown`, onEscKeyDown);
   });
