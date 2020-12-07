@@ -1,23 +1,7 @@
-import {createElement} from "../utils";
 import {createNoPointTemplate} from "./no-point-template";
-
-export default class NoPoint {
-  constructor() {
-    this._element = null;
-  }
-
+import Abstract from "./abstract";
+export default class NoPoint extends Abstract {
   getTemplate() {
     return createNoPointTemplate();
-  }
-
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-    return this._element;
-  }
-
-  removeElement() {
-    this._element = null;
   }
 }

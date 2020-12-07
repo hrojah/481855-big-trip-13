@@ -1,24 +1,13 @@
-import {createElement} from "../utils";
 import {createTripCostTemplate} from "./trip-cost-template";
+import Abstract from "./abstract";
 
-export default class TripCost {
+export default class TripCost extends Abstract {
   constructor(events) {
+    super();
     this._events = events;
-    this._element = null;
   }
 
   getTemplate() {
     return createTripCostTemplate(this._events);
-  }
-
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-    return this._element;
-  }
-
-  removeElement() {
-    this._element = null;
   }
 }

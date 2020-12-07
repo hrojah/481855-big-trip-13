@@ -1,24 +1,13 @@
-import {createElement} from "../utils";
 import {createAddPointFormTemplate} from "./add-point-form-template";
+import Abstract from "./abstract";
 
-export default class AddPoint {
+export default class AddPoint extends Abstract {
   constructor(event) {
+    super();
     this._event = event;
-    this._element = null;
   }
 
   getTemplate() {
     return createAddPointFormTemplate(this._event);
-  }
-
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-    return this._element;
-  }
-
-  removeElement() {
-    this._element = null;
   }
 }

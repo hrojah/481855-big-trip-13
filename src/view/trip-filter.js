@@ -1,23 +1,8 @@
-import {createElement} from "../utils";
 import {createFilterTemplate} from "./trip-filter-template";
+import Abstract from "./abstract";
 
-export default class EventFilter {
-  constructor() {
-    this._element = null;
-  }
-
+export default class EventFilter extends Abstract {
   getTemplate() {
     return createFilterTemplate();
-  }
-
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-    return this._element;
-  }
-
-  removeElement() {
-    this._element = null;
   }
 }

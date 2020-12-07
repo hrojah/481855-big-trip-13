@@ -1,23 +1,8 @@
-import {createElement} from "../utils";
 import {createEventsListTemplate} from "./trip-events-list-template";
+import Abstract from "./abstract";
 
-export default class EventList {
-  constructor() {
-    this._element = null;
-  }
-
+export default class EventList extends Abstract {
   getTemplate() {
     return createEventsListTemplate();
-  }
-
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-    return this._element;
-  }
-
-  removeElement() {
-    this._element = null;
   }
 }
