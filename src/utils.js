@@ -69,3 +69,9 @@ export const createElement = (template) => {
 
   return newElement.firstChild;
 };
+
+export const isEscPressed = (evt) => {
+  if (evt.key === `Escape` || evt.key === `Esc`) {
+    return true
+  }
+};

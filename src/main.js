@@ -9,6 +9,7 @@ import EditPointView from "./view/edit-point-form";
 import NoPointView from "./view/no-point";
 import {render, RenderPosition} from "./utils";
 import {generateEvent} from "./mock/event";
+import {isEscPressed} from "./utils";
 import {TRIP_EVENT} from "./const";
 
 const events = new Array(TRIP_EVENT).fill().map(generateEvent).sort((a, b) => a.startTime - b.startTime);
@@ -52,7 +53,7 @@ const renderPoint = (pointListElement, point) => {
   }
 
   const onEscKeyDown = (evt) => {
-    if (evt.key === `Escape` || evt.key === `Esc`) {
+    if (isEscPressed) {
       evt.preventDefault();
       replaceFormToPoint();
       document.removeEventListener(`keydown`, onEscKeyDown);
@@ -75,7 +76,7 @@ const renderPoint = (pointListElement, point) => {
     document.removeEventListener(`keydown`, onEscKeyDown);
   });
 
-  render(pointListElement, pointComponent.getElement(), RenderPosition.BEFOREEND);
+  render(pointListElement, pointEditComponent.getElement(), RenderPosition.BEFOREEND);
 };
 
 const renderBoard = (pointContainer, points) => {
