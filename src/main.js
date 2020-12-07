@@ -80,7 +80,7 @@ const renderPoint = (pointListElement, point) => {
 
 const renderBoard = (pointContainer, points) => {
   const pointList = new EventListView();
-  if (points.length === 0) {
+  if (!points.length) {
     render(pointContainer, new NoPointView().getElement(), RenderPosition.AFTERBEGIN);
     return;
   }
