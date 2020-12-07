@@ -1,4 +1,5 @@
-import { renderOffers } from "./offers";
+import {createElement} from "../utils";
+import Offer from "./offers";
 import dayjs from "dayjs";
 
 export const createAddPointFormTemplate = (event) => {
@@ -17,9 +18,7 @@ export const createAddPointFormTemplate = (event) => {
                   <div class="event__type-wrapper">
                     <label class="event__type  event__type-btn" for="event-type-toggle-1">
                       <span class="visually-hidden">Choose event type</span>
-                      <img class="event__type-icon" width="17" height="17" src="img/icons/${
-                        event.type
-                      }.png" alt="Event type icon">
+                      <img class="event__type-icon" width="17" height="17" src="img/icons/${event.type}.png" alt="Event type icon">
                     </label>
                     <input class="event__type-toggle  visually-hidden" id="event-type-toggle-1" type="checkbox">
 
@@ -84,9 +83,7 @@ export const createAddPointFormTemplate = (event) => {
                     <label class="event__label  event__type-output" for="event-destination-1">
                       ${event.destination}
                     </label>
-                    <input class="event__input  event__input--destination" id="event-destination-1" type="text" name="event-destination" value="${
-                      event.destination
-                    }" list="destination-list-1">
+                    <input class="event__input  event__input--destination" id="event-destination-1" type="text" name="event-destination" value="${event.destination}" list="destination-list-1">
                     <datalist id="destination-list-1">
                       <option value="Amsterdam"></option>
                       <option value="Geneva"></option>
@@ -107,9 +104,7 @@ export const createAddPointFormTemplate = (event) => {
                       <span class="visually-hidden">Price</span>
                       &euro;
                     </label>
-                    <input class="event__input  event__input--price" id="event-price-1" type="text" name="event-price" value="${
-                      event.price
-                    }">
+                    <input class="event__input  event__input--price" id="event-price-1" type="text" name="event-price" value="${event.price}">
                   </div>
 
                   <button class="event__save-btn  btn  btn--blue" type="submit">Save</button>
@@ -119,15 +114,13 @@ export const createAddPointFormTemplate = (event) => {
                   <section class="event__section  event__section--offers">
                     <h3 class="event__section-title  event__section-title--offers">Offers</h3>
                     <div class="event__available-offers">
-                      ${renderOffers(event)}
+                      ${new Offer(event).getTemplate()}
                     </div>
                   </section>
 
                   <section class="event__section  event__section--destination">
                     <h3 class="event__section-title  event__section-title--destination">Destination</h3>
-                    <p class="event__destination-description">${
-                      event.description
-                    }</p>
+                    <p class="event__destination-description">${event.description}</p>
 
                     <div class="event__photos-container">
                       <div class="event__photos-tape">
@@ -138,3 +131,25 @@ export const createAddPointFormTemplate = (event) => {
                 </section>
               </form>`;
 };
+
+export default class AddPoint {
+  constructor(event) {
+    this._event = event;
+    this._element = null;
+  }
+
+  getTemplate() {
+    return createAddPointFormTemplate(this._event);
+  }
+
+  getElement() {
+    if (!this._element) {
+      this._element = createElement(this.getTemplate());
+    }
+    return this._element;
+  }
+
+  removeElement() {
+    this._element = null;
+  }
+}

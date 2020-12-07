@@ -1,17 +1,16 @@
 import {createElement} from "../utils";
 
-const createEventsListTemplate = () => {
-  return `<ul class="trip-events__list">
-</ul>`;
+const createNoPointTemplate = () => {
+  return `<p class="trip-events__msg">Click New Event to create your first point</p>`;
 };
 
-export default class EventList {
+export default class NoPoint {
   constructor() {
     this._element = null;
   }
 
   getTemplate() {
-    return createEventsListTemplate();
+    return createNoPointTemplate();
   }
 
   getElement() {
