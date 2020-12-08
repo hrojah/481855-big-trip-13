@@ -7,8 +7,9 @@ import EventListView from "./view/trip-events-list";
 import PointView from "./view/event-item";
 import EditPointView from "./view/edit-point-form";
 import NoPointView from "./view/no-point";
-import {render, RenderPosition} from "./utils";
+import {render, RenderPosition, replace} from "./utils/render";
 import {generateEvent} from "./mock/event";
+import {isEscPressed} from "./utils/common";
 import {TRIP_EVENT} from "./const";
 
 const events = new Array(TRIP_EVENT).fill().map(generateEvent).sort((a, b) => a.startTime - b.startTime);
@@ -25,8 +26,8 @@ const tripInfoContainer = document.querySelector(`.trip-main`);
 const menuContainer = tripInfoContainer.querySelector(`.trip-controls`);
 
 menuContainer.innerHTML = ``;
-render(menuContainer, new TripMenuView().getElement(), RenderPosition.BEFOREEND);
-render(menuContainer, new EventFilterView().getElement(), RenderPosition.BEFOREEND);
+render(menuContainer, new TripMenuView(), RenderPosition.BEFOREEND);
+render(menuContainer, new EventFilterView(), RenderPosition.BEFOREEND);
 
 const eventsContainer = document.querySelector(`.trip-events`);
 
@@ -34,9 +35,9 @@ const renderTripInfo = (points) => {
   if (points.length === 0) {
     return;
   }
-  render(tripInfoContainer, new TripInfoView(points, routeList).getElement(), RenderPosition.AFTERBEGIN);
+  render(tripInfoContainer, new TripInfoView(points, routeList), RenderPosition.AFTERBEGIN);
   const costContainer = tripInfoContainer.querySelector(`.trip-info`);
-  render(costContainer, new TripCostView(points).getElement(), RenderPosition.BEFOREEND);
+  render(costContainer, new TripCostView(points), RenderPosition.BEFOREEND);
 }
 
 const renderPoint = (pointListElement, point) => {
@@ -44,50 +45,49 @@ const renderPoint = (pointListElement, point) => {
   const pointEditComponent = new EditPointView(point);
 
   const replacePointToForm = () => {
-    pointListElement.replaceChild(pointEditComponent.getElement(), pointComponent.getElement())
+    replace(pointEditComponent, pointComponent)
   }
 
   const replaceFormToPoint = () => {
-    pointListElement.replaceChild(pointComponent.getElement(), pointEditComponent.getElement())
+    replace(pointComponent, pointEditComponent)
   }
 
   const onEscKeyDown = (evt) => {
-    if (evt.key === `Escape` || evt.key === `Esc`) {
+    if (isEscPressed) {
       evt.preventDefault();
       replaceFormToPoint();
       document.removeEventListener(`keydown`, onEscKeyDown);
     }
   };
 
-  pointComponent.getElement().querySelector(`.event__rollup-btn`).addEventListener(`click`, () => {
+  pointComponent.setEditClickHandler(() => {
     replacePointToForm();
     document.addEventListener(`keydown`, onEscKeyDown);
-  });
+  })
 
-  pointEditComponent.getElement().addEventListener(`submit`, (evt) => {
-    evt.preventDefault();
+  pointEditComponent.setFormSubmitHandler(() => {
+    replaceFormToPoint();
+    document.removeEventListener(`keydown`, onEscKeyDown);
+  })
+
+  pointEditComponent.setEditClickHandler(() => {
     replaceFormToPoint();
     document.removeEventListener(`keydown`, onEscKeyDown);
   });
 
-  pointEditComponent.getElement().querySelector(`.event__rollup-btn`).addEventListener(`click`, (evt) => {
-    replaceFormToPoint();
-    document.removeEventListener(`keydown`, onEscKeyDown);
-  });
-
-  render(pointListElement, pointComponent.getElement(), RenderPosition.BEFOREEND);
+  render(pointListElement, pointEditComponent, RenderPosition.BEFOREEND);
 };
 
 const renderBoard = (pointContainer, points) => {
   const pointList = new EventListView();
   if (!points.length) {
-    render(pointContainer, new NoPointView().getElement(), RenderPosition.AFTERBEGIN);
+    render(pointContainer, new NoPointView(), RenderPosition.AFTERBEGIN);
     return;
   }
   renderTripInfo(points);
-  render(pointContainer, new TripSortView().getElement(), RenderPosition.AFTERBEGIN);
-  render(pointContainer, pointList.getElement(), RenderPosition.BEFOREEND)
-  points.forEach((point) => renderPoint(pointList.getElement(), point));
+  render(pointContainer, new TripSortView(), RenderPosition.AFTERBEGIN);
+  render(pointContainer, pointList, RenderPosition.BEFOREEND)
+  points.forEach((point) => renderPoint(pointList, point));
 }
 
 renderBoard(eventsContainer, events);
