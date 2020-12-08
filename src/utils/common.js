@@ -6,5 +6,5 @@ export const getRandomInteger = (a = 0, b = 1) => {
 };
 
 export const isEscPressed = (evt) => {
-  return (evt.key === `Escape` || evt.key === `Esc`)
+  return (evt.key === `Escape` || evt.key === `Esc`);
 };
