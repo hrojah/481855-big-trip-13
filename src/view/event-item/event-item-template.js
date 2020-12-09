@@ -1,4 +1,4 @@
-import {createEventDate} from "../utils/point";
+import {createEventDate} from "@utils/point";
 
 export const createPointTemplate = (event) => {
   const {type, price, startTime, endTime, destination, isFavorite, offers} = event;

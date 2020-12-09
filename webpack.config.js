@@ -8,6 +8,12 @@ module.exports = {
     filename: 'bundle.js',
     path: path.resolve(__dirname, 'public'),
   },
+  resolve: {
+    alias: {
+      '@utils': path.resolve(__dirname, './src/utils'),
+      '@view': path.resolve(__dirname, `src/view`),
+    }
+  },
   devtool: 'source-map',
   devServer: {
     contentBase: path.resolve(__dirname, 'public'),

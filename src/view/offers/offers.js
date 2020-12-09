@@ -1,5 +1,5 @@
-import {renderOffers} from "./offers-template";
-import Abstract from "./abstract";
+import {renderOffers} from "@view/offers/offers-template";
+import Abstract from "@view/abstract";
 
 export default class Offer extends Abstract {
   constructor(event) {

@@ -1,15 +1,15 @@
-import TripInfoView from "./view/trip-info";
-import TripCostView from "./view/trip-cost";
-import TripMenuView from "./view/trip-menu";
-import EventFilterView from "./view/trip-filter";
-import TripSortView from "./view/trip-sort";
-import EventListView from "./view/trip-events-list";
-import PointView from "./view/event-item";
-import EditPointView from "./view/edit-point-form";
-import NoPointView from "./view/no-point";
-import {render, RenderPosition, replace} from "./utils/render";
+import TripInfoView from "@view/trip-info/trip-info";
+import TripCostView from "@view/trip-cost/trip-cost";
+import TripMenuView from "@view/trip-menu/trip-menu";
+import EventFilterView from "@view/trip-filter/trip-filter";
+import TripSortView from "@view/trip-sort/trip-sort";
+import EventListView from "@view/trip-event-list/trip-events-list";
+import PointView from "@view/event-item/event-item";
+import EditPointView from "@view/edit-point-form/edit-point-form";
+import NoPointView from "@view/no-point/no-point";
+import {render, replace, RenderPosition} from "@utils/render";
 import {generateEvent} from "./mock/event";
-import {isEscPressed} from "./utils/common";
+import {isEscPressed} from "@utils/common";
 import {TRIP_EVENT} from "./const";
 
 const events = new Array(TRIP_EVENT).fill().map(generateEvent).sort((a, b) => a.startTime - b.startTime);
@@ -40,7 +40,7 @@ const renderTripInfo = (points) => {
   render(costContainer, new TripCostView(points), RenderPosition.BEFOREEND);
 }
 
-const renderPoint = (pointListElement, point) => {
+const renderPoint = (pointListElement, point, isOpen) => {
   const pointComponent = new PointView(point);
   const pointEditComponent = new EditPointView(point);
 
@@ -53,7 +53,7 @@ const renderPoint = (pointListElement, point) => {
   }
 
   const onEscKeyDown = (evt) => {
-    if (isEscPressed) {
+    if (isEscPressed(evt)) {
       evt.preventDefault();
       replaceFormToPoint();
       document.removeEventListener(`keydown`, onEscKeyDown);
@@ -75,7 +75,12 @@ const renderPoint = (pointListElement, point) => {
     document.removeEventListener(`keydown`, onEscKeyDown);
   });
 
-  render(pointListElement, pointEditComponent, RenderPosition.BEFOREEND);
+  render(pointListElement, pointComponent, RenderPosition.BEFOREEND);
+
+  if(isOpen) {
+    replacePointToForm();
+    document.addEventListener(`keydown`, onEscKeyDown);
+  }
 };
 
 const renderBoard = (pointContainer, points) => {
@@ -86,8 +91,8 @@ const renderBoard = (pointContainer, points) => {
   }
   renderTripInfo(points);
   render(pointContainer, new TripSortView(), RenderPosition.AFTERBEGIN);
-  render(pointContainer, pointList, RenderPosition.BEFOREEND)
-  points.forEach((point) => renderPoint(pointList, point));
+  render(pointContainer, pointList, RenderPosition.BEFOREEND);
+  points.forEach((point, index) => renderPoint(pointList, point, index === 0));
 }
 
 renderBoard(eventsContainer, events);

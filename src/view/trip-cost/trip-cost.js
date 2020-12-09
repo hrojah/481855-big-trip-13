@@ -1,5 +1,5 @@
-import {createTripCostTemplate} from "./trip-cost-template";
-import Abstract from "./abstract";
+import {createTripCostTemplate} from "@view/trip-cost/trip-cost-template";
+import Abstract from "@view/abstract";
 
 export default class TripCost extends Abstract {
   constructor(events) {

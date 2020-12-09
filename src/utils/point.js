@@ -1,4 +1,4 @@
-import {DAY, HOUR} from "../const";
+import {MINUTES_IN_HOUR, MINUTES_IN_DAY} from "../const";
 
 export const createEventDate = (startTime, endTime) => {
   const monthDayString = startTime.format(`MMM DD`);
@@ -7,8 +7,8 @@ export const createEventDate = (startTime, endTime) => {
   const hoursMinutesStartString = startTime.format(`HH:mm`);
   const fullEndDayString = endTime.format(`YYYY-MM-DDTHH:mm`);
   const totalMinutes = endTime.diff(startTime, `minute`);
-  const totalHours = Math.floor(totalMinutes / HOUR);
-  const totalDays = Math.floor(totalMinutes / DAY);
+  const totalHours = Math.floor(totalMinutes / MINUTES_IN_HOUR);
+  const totalDays = Math.floor(totalMinutes / MINUTES_IN_DAY);
 
   const minutesLeft = totalMinutes - totalHours * 60;
   const hoursLeft = totalHours - totalDays * 24;

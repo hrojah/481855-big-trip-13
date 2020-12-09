@@ -1,5 +1,5 @@
-import {createAddPointFormTemplate} from "./add-point-form-template";
-import Abstract from "./abstract";
+import {createAddPointFormTemplate} from "@view/add-point-form/add-point-form-template";
+import Abstract from "@view/abstract";
 
 export default class AddPoint extends Abstract {
   constructor(event) {

@@ -1,5 +1,5 @@
-import {createPointTemplate} from "./event-item-template";
-import Abstract from "./abstract";
+import {createPointTemplate} from "@view/event-item/event-item-template";
+import Abstract from "@view/abstract";
 
 export default class Point extends Abstract {
   constructor(event) {
