@@ -1,4 +1,5 @@
 import {getRandomInteger} from "@utils/common";
+import {nanoid} from "nanoid";
 import dayjs from "dayjs";
 
 const generateDescription = () => {
@@ -86,6 +87,7 @@ const generateDate = () => {
 export const generateEvent = () => {
   const date = generateDate();
   return {
+    id: nanoid(),
     type: generateType(),
     destination: generateDestination(),
     offers: generateOffers(),

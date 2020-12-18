@@ -11,7 +11,8 @@ module.exports = {
   resolve: {
     alias: {
       '@utils': path.resolve(__dirname, './src/utils'),
-      '@view': path.resolve(__dirname, `src/view`),
+      '@view': path.resolve(__dirname, 'src/view'),
+      '@presenter': path.resolve(__dirname, 'src/presenter')
     }
   },
   devtool: 'source-map',
