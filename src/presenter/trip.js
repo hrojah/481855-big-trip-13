@@ -6,12 +6,11 @@ import EventFilterView from "@view/trip-filter/trip-filter";
 import TripInfoView from "@view/trip-info/trip-info";
 import TripCostView from "@view/trip-cost/trip-cost";
 import PointPresenter from "@presenter/point";
-import {routeList} from "../main";
 import {render, RenderPosition} from "@utils/render";
 import {updateItem} from "@utils/common";
 
 export default class Trip {
-  constructor(pointsContainer) {
+  constructor(pointsContainer, events) {
     this._pointsContainer = pointsContainer;
     this._pointPresenter = {};
 
@@ -23,12 +22,13 @@ export default class Trip {
 
     this._handlePointChange = this._handlePointChange.bind(this);
     this._handleModelChange = this._handleModelChange.bind(this);
+    this.init(events);
   }
 
   init(points) {
     this._points = points.slice();
 
-    this._tripInfo = new TripInfoView(points, routeList);
+    this._tripInfo = new TripInfoView(points);
 
     if (!this._points.length) {
       render(this._pointsContainer, this._noPointComponent, RenderPosition.AFTERBEGIN);
@@ -76,9 +76,9 @@ export default class Trip {
     this._pointPresenter = {};
   }
 
-  _handlePointChange(updatePoint) {
-    this._points = updateItem(this._points, updatePoint);
-    this._pointPresenter[updatePoint.id].init(updatePoint);
+  _handlePointChange(updatedPoint) {
+    this._points = updateItem(this._points, updatedPoint);
+    this._pointPresenter[updatedPoint.id].init(updatedPoint);
   }
 
   _handleModelChange() {

@@ -5,13 +5,6 @@ import Description from "@view/description/description";
 export const createAddPointFormTemplate = (event) => {
   const startTime = dayjs(event.startTime).format(`DD/MM/YY HH:mm`);
   const endTime = dayjs(event.endTime).format(`DD/MM/YY HH:mm`);
-  // const renderPhotos = () => {
-  //   return event.photos
-  //     .map((photo) => {
-  //       return `<img class="event__photo" src="${photo}" alt="Event photo">`;
-  //     })
-  //     .join(``);
-  // };
 
   return `<form class="event event--edit" action="#" method="post">
                 <header class="event__header">

@@ -15,7 +15,7 @@ export default class EditPoint extends Abstract {
 
   _formSubmitHandler(evt) {
     evt.preventDefault();
-    this._callback.formSubmit(this._point);
+    this._callback.formSubmit(this._event);
   }
 
   _editClickHandler(evt) {
