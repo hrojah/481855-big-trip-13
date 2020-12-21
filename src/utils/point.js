@@ -33,5 +33,16 @@ export const createEventDate = (startTime, endTime) => {
     hoursMinutesStartString,
     fullEndDayString,
     duration,
+    totalMinutes,
   };
 };
+
+export const sortPointPrice = (pointA, pointB) => {
+  return pointB.price - pointA.price;
+};
+
+export const sortPointTime = (pointA, pointB) => {
+  const timeA = pointA.endTime.diff(pointA.startTime, `minute`);
+  const timeB = pointB.endTime.diff(pointB.startTime, `minute`);
+  return timeB - timeA;
+}
