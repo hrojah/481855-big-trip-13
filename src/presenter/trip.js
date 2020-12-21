@@ -32,7 +32,7 @@ export default class Trip {
   init(points) {
     this._points = points.slice();
 
-    this._sourcedPoints =  points.slice();
+    this._sourcedPoints = points.slice();
 
     this._tripInfo = new TripInfoView(points);
 
@@ -63,7 +63,7 @@ export default class Trip {
 
   _renderSort() {
     render(this._pointsContainer, this._sortComponent, RenderPosition.AFTERBEGIN);
-    this._sortComponent.setSortTypeChangeHandler(this._handleSortTypeChange)
+    this._sortComponent.setSortTypeChangeHandler(this._handleSortTypeChange);
   }
 
   _renderPoint(point, isOpen) {
