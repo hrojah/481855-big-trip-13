@@ -5,7 +5,6 @@ export default class TripInfo extends Abstract {
   constructor(events) {
     super();
     this._events = events;
-    // this._routeList = routeList;
   }
 
   getTemplate() {

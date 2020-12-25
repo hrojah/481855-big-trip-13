@@ -53,7 +53,7 @@ export default class Trip {
     menuContainer.innerHTML = ``;
     render(menuContainer, this._tripMenuComponent, RenderPosition.BEFOREEND);
     render(menuContainer, this._eventFilterComponent, RenderPosition.BEFOREEND);
-    if (this._points.length === 0) {
+    if (!this._points.length) {
       return;
     }
     render(tripInfoContainer, this._tripInfo, RenderPosition.AFTERBEGIN);
