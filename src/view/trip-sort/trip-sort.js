@@ -13,7 +13,6 @@ export default class TripSort extends Abstract {
   }
 
   _sortTypeChangeHandler(evt) {
-    console.log(evt.target.className);
     if (evt.target.classList.contains(`trip-sort__btn`)) {
       return;
     }
