@@ -6,7 +6,7 @@ import TripInfoView from "@view/trip-info/trip-info";
 import TripCostView from "@view/trip-cost/trip-cost";
 import PointPresenter from "@presenter/point";
 import PointNewPresenter from "@presenter/point-new";
-import {render, RenderPosition, remove} from "@utils/render";
+import {render, RenderPosition} from "@utils/render";
 import {FILTER_TYPE, SORT_TYPE, UPDATE_TYPE, USER_ACTION} from "../const";
 import {sortPointPrice, sortPointTime} from "@utils/point";
 import {filter} from "@utils/filter";
@@ -30,7 +30,7 @@ export default class Trip {
     this._pointsModel.addObserver(this._handleModeEvent);
     this._filterModel.addObserver(this._handleModeEvent);
 
-    this._pointNewPresenter = new PointNewPresenter(this._pointListComponent, this._handleViewAction)
+    this._pointNewPresenter = new PointNewPresenter(this._pointListComponent, this._handleViewAction);
     this.init();
   }
 
@@ -90,7 +90,6 @@ export default class Trip {
   }
 
   _handleModeEvent(updateType, data) {
-    console.log(this._pointPresenter, data)
     const points = this._getPoints();
     switch (updateType) {
       case UPDATE_TYPE.MINOR:

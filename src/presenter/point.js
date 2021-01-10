@@ -1,7 +1,7 @@
 import PointView from "@view/point/point";
 import EditPointView from "@view/edit-point-form/edit-point-form";
 import {render, replace, remove, RenderPosition} from "@utils/render";
-import {isEscPressed} from "@utils/common"
+import {isEscPressed} from "@utils/common";
 import {USER_ACTION, UPDATE_TYPE} from "../const";
 
 const Mode = {
