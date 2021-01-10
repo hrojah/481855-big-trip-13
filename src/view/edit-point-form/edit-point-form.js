@@ -10,9 +10,10 @@ export default class EditPoint extends SmartView {
     super();
     this._data = EditPoint.parsePointToData(point);
     this._point = point;
-    this._starttimepicker = null;
-    this._endtimepicker = null;
+    this._startTimePicker = null;
+    this._endTimePicker = null;
     this._formSubmitHandler = this._formSubmitHandler.bind(this);
+    this._formDeleteClickHandler = this._formDeleteClickHandler.bind(this);
     this._editClickHandler = this._editClickHandler.bind(this);
     this._destinationInputHandler = this._destinationInputHandler.bind(this);
     this._priceInputHandler = this._priceInputHandler.bind(this);
@@ -20,6 +21,8 @@ export default class EditPoint extends SmartView {
     this._offersChangeHandler = this._offersChangeHandler.bind(this);
     this._startTimeChangeHandler = this._startTimeChangeHandler.bind(this);
     this._endTimeChangeHandler = this._endTimeChangeHandler.bind(this);
+    this._startTimeCloseHandler = this._startTimeCloseHandler.bind(this);
+    this._endTimeCloseHandler = this._endTimeCloseHandler.bind(this);
     this._setInnerHandler();
     this._setStartTimePicker();
     this._setEndTimePicker();
@@ -75,6 +78,7 @@ export default class EditPoint extends SmartView {
     this.setFormSubmitHandler(this._callback.formSubmit);
     this._setStartTimePicker();
     this._setEndTimePicker();
+    this.setDeleteClickHandler(this._callback.deleteClick);
   }
 
   _setInnerHandler() {
@@ -111,41 +115,59 @@ export default class EditPoint extends SmartView {
     });
   }
 
+  _startTimeCloseHandler() {
+    this._startTimePicker.destroy();
+  }
+
+  _endTimeCloseHandler() {
+    this._endTimePicker.destroy();
+  }
+
   _setStartTimePicker() {
-    if (this._starttimepicker) {
-      // this._starttimepicker.destroy();
-      this._starttimepicker = null;
+    if (this._startTimePicker) {
+      this._startTimePicker = null;
     }
 
-    this._starttimepicker = flatpickr(
+    this._startTimePicker = flatpickr(
       this.getElement().querySelector(`#event-start-time-1`),
       {
         enableTime: true,
         dateFormat: `d/m/Y H:i`,
-        defaultDate: this._data.startTime,
+        defaultDate: this._data.startTime.toDate(),
         onChange: this._startTimeChangeHandler,
+        onClose: this._startTimeChangeHandler
       }
     );
   }
 
   _setEndTimePicker() {
-    if (this._endtimepicker) {
-      // this._endtimepicker.destroy();
-      this._endtimepicker = null;
+    if (this._endTimePicker) {
+      this._endTimePicker = null;
     }
 
-    this._endtimepicker = flatpickr(
+    this._endTimePicker = flatpickr(
       this.getElement().querySelector(`#event-end-time-1`),
       {
         enableTime: true,
         dateFormat: `d/m/Y H:i`,
-        defaultDate: this._data.endTime,
+        defaultDate: this._data.endTime.toDate(),
         onChange: this._endTimeChangeHandler,
+        onClose: this._endTimeChangeHandler
       }
     );
   }
 
   reset(point) {
     this.updateData(EditPoint.parsePointToData(point));
+  }
+
+  _formDeleteClickHandler(evt) {
+    evt.preventDefault();
+    this._callback.deleteClick(EditPoint.parseDataToPoint(this._data));
+  }
+
+  setDeleteClickHandler(callback) {
+    this._callback.deleteClick = callback;
+    this.getElement().querySelector(`.event__reset-btn`).addEventListener(`click`, this._formDeleteClickHandler);
   }
 }

@@ -3,7 +3,7 @@ import Abstract from "@view/abstract";
 export default class Smart extends Abstract {
   constructor() {
     super();
-    this.data = {};
+    this._data = {};
   }
 
   updateElement() {

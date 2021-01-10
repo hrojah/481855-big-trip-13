@@ -5,7 +5,8 @@ import Description from "@view/description/description";
 export const createEditPointFormTemplate = (event) => {
   const startTime = dayjs(event.startTime).format(`DD/MM/YY HH:mm`);
   const endTime = dayjs(event.endTime).format(`DD/MM/YY HH:mm`);
-  return `<form class="event event--edit" action="#" method="post">
+
+  return `<form class="event event--edit" method="get">
                 <header class="event__header">
                   <div class="event__type-wrapper">
                     <label class="event__type  event__type-btn" for="event-type-toggle-1">

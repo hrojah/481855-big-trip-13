@@ -7,3 +7,18 @@ export const SORT_TYPE = {
   TIME: `time`,
   PRICE: `price`
 };
+export const USER_ACTION = {
+  UPDATE_POINT: `update_point`,
+  ADD_POINT: `add_point`,
+  DELETE_POINT: `delete_point`
+}
+export const UPDATE_TYPE = {
+  PATCH: `patch`,
+  MINOR: `minor`,
+  MAJOR: `major`
+}
+export const FILTER_TYPE = {
+  EVERYTHING: `everything`,
+  FUTURE: `future`,
+  PAST: `past`,
+}
