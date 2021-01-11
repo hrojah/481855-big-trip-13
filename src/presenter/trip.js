@@ -6,7 +6,7 @@ import TripInfoView from "@view/trip-info/trip-info";
 import TripCostView from "@view/trip-cost/trip-cost";
 import PointPresenter from "@presenter/point";
 import PointNewPresenter from "@presenter/point-new";
-import {render, RenderPosition, remove} from "@utils/render";
+import {render, RenderPosition} from "@utils/render";
 import {FILTER_TYPE, SORT_TYPE, UPDATE_TYPE, USER_ACTION} from "../const";
 import {sortPointPrice, sortPointTime} from "@utils/point";
 import {filter} from "@utils/filter";
@@ -78,7 +78,7 @@ export default class Trip {
   }
 
   _renderPoints(points) {
-    points.forEach((point, index) =>
+    points.forEach((point) =>
       this._renderPoint(point)
     );
   }
@@ -90,7 +90,6 @@ export default class Trip {
   }
 
   _handleModeEvent(updateType, data) {
-    debugger;
     const points = this._getPoints();
     switch (updateType) {
       case UPDATE_TYPE.MINOR:
