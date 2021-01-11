@@ -51,6 +51,6 @@ export default class Point extends Observer {
       ...this._points.slice(index + 1)
     ];
 
-    this._notify(updateType);
+    this._notify(updateType, update);
   }
 }

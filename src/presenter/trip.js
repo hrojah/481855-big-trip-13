@@ -6,7 +6,7 @@ import TripInfoView from "@view/trip-info/trip-info";
 import TripCostView from "@view/trip-cost/trip-cost";
 import PointPresenter from "@presenter/point";
 import PointNewPresenter from "@presenter/point-new";
-import {render, RenderPosition} from "@utils/render";
+import {render, RenderPosition, remove} from "@utils/render";
 import {FILTER_TYPE, SORT_TYPE, UPDATE_TYPE, USER_ACTION} from "../const";
 import {sortPointPrice, sortPointTime} from "@utils/point";
 import {filter} from "@utils/filter";
@@ -71,15 +71,15 @@ export default class Trip {
     render(this._pointsContainer, this._sortComponent, RenderPosition.AFTERBEGIN);
   }
 
-  _renderPoint(point, isOpen) {
+  _renderPoint(point) {
     const pointPresenter = new PointPresenter(this._pointListComponent, this._handleViewAction, this._handleModeChange);
-    pointPresenter.init(point, isOpen);
+    pointPresenter.init(point);
     this._pointPresenter[point.id] = pointPresenter;
   }
 
   _renderPoints(points) {
     points.forEach((point, index) =>
-      this._renderPoint(point, index === 0)
+      this._renderPoint(point)
     );
   }
 
@@ -90,9 +90,13 @@ export default class Trip {
   }
 
   _handleModeEvent(updateType, data) {
+    debugger;
     const points = this._getPoints();
     switch (updateType) {
       case UPDATE_TYPE.MINOR:
+        if (this._pointPresenter[data.id]) {
+          this._pointPresenter[data.id].destroy();
+        }
         this._pointPresenter[data.id].init(data);
         break;
       case UPDATE_TYPE.MAJOR:
@@ -145,9 +149,14 @@ export default class Trip {
     }
   }
 
+  _closeForms() {
+    Object.values(this._pointPresenter).forEach((presenter) => presenter.resetView());
+  }
+
   createPoint() {
     this._currentSortType = SORT_TYPE.DEFAULT;
     this._filterModel.setFilter(UPDATE_TYPE.MAJOR, FILTER_TYPE.EVERYTHING);
     this._pointNewPresenter.init();
+    this._closeForms();
   }
 }

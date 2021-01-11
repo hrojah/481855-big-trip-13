@@ -27,7 +27,7 @@ export default class Point {
     this._escKeyDownHandler = this._escKeyDownHandler.bind(this);
   }
 
-  init(point, isOpen) {
+  init(point) {
     this._point = point;
 
     const prevPointComponent = this._pointComponent;
@@ -43,10 +43,6 @@ export default class Point {
 
     if (prevPointComponent === null || prevPointEditComponent === null) {
       render(this._pointListComponent, this._pointComponent, RenderPosition.BEFOREEND);
-
-      if (isOpen) {
-        this._replacePointToForm();
-      }
       return;
     }
 
